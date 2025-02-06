@@ -124,7 +124,7 @@ namespace GPTLearning.Services
             "Amigoooo estoy casado.",
             "No hables de eso, tengo la mejor mujer hdp.",
             "Estoy con mi señora, dejame tranquilo hdp.",
-            "Jaj, dejame de joder amigooo, soy un hombre de familia.",
+            "Que diceeeeeee.",
             "¿Qué decís? Yo no buitreo hdp."
         };
                 return GetRandomResponse(mujeresResponses);
