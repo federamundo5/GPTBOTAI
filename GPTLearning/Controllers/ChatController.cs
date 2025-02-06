@@ -14,7 +14,7 @@ namespace GPTLearning.Controllers
         {
             _gptService = gptService;
         }
-
+        //test
         [HttpPost("ask")]
         public async Task<IActionResult> Ask([FromBody] string userInput)
         {
