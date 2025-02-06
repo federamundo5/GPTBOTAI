@@ -10,7 +10,6 @@ namespace GPTLearning.Controllers
     public class ChatController : ControllerBase
     {
         private readonly IGPTService _gptService;
-
         public ChatController(IGPTService gptService)
         {
             _gptService = gptService;
