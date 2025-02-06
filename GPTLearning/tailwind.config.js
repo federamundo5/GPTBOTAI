@@ -1,7 +1,7 @@
 module.exports = {
     content: [
         "./Views/**/*.cshtml",
-        "./wwwroot/js/**/*.js" // Add this if you're using JS for dynamic class names
+        "./wwwroot/js/**/*.js"
     ],
     theme: {
         extend: {
@@ -10,20 +10,14 @@ module.exports = {
                 secondary: "#AAB99A", // Soft Green
                 light: "#D0DDD0",  // Light Background
                 accent: "#F0F0D7"   // Soft Yellowish
+            },
+            fontFamily: {
+                robotic: ['Orbitron', 'sans-serif']
             }
         }
     },
-    plugins: [
-        require('tailwind-scrollbar'), // Enable the scrollbar plugin
-    ],
-}
-
-module.exports = {
-    theme: {
-        extend: {
-            fontFamily: {
-                robotic: ['Orbitron', 'sans-serif'],
-            }
-        }
-    }
+    corePlugins: {
+        animation: true,
+    },
+    important: true, // Add this line to apply !important to all Tailwind classes
 }

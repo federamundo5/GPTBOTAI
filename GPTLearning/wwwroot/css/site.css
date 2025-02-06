@@ -2,10 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
-
 /* Override Bootstrap bg-light with your custom color */
 .bg-light {
     background-color: #D0DDD0 !important;
+}
+/* Custom Bounce Animation */
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Apply bounce animation with !important */
+.animate-bounce {
+    animation: bounce 1s infinite !important;
+}
+
+
+/* Add !important to Tailwind animations */
+.animate-bounce {
+    animation: bounce 1s infinite !important;
+}
+
+.animate-opacity {
+    opacity: 1 !important;
 }
 
 /* Custom class to push footer to the bottom */
@@ -22,5 +46,3 @@
 body {
     font-family: 'Orbitron', sans-serif;
 }
-
-

@@ -21,6 +21,7 @@ namespace GPTLearning.Controllers
             if (string.IsNullOrWhiteSpace(userInput))
                 return BadRequest("Input cannot be empty.");
 
+
             var response = await _gptService.GetResponseFromOpenAI(userInput);
             return Ok(new { Response = response });
         }
