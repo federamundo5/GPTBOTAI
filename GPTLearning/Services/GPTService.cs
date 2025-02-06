@@ -11,6 +11,7 @@ namespace GPTLearning.Services
         private readonly IConfiguration _configuration;
         private readonly HttpClient _httpClient;
         private readonly string _apiKey;
+        private readonly string testKey;
         private readonly string _model = "ft:gpt-4o-mini-2024-07-18:federkn:third:AxQCcw7a"; // Modelo fine-tuned
         public GPTService(
          IConfiguration configuration,
@@ -19,6 +20,7 @@ namespace GPTLearning.Services
             _configuration = configuration;
             _httpClient = httpClient;
             _apiKey = _configuration["OpenAI:Api-Key"];
+            testKey = _configuration["testkey"];
 
         }
 
@@ -80,7 +82,7 @@ namespace GPTLearning.Services
                 return responseJson.choices[0].message.content.ToString();
             }
 
-            return "Error: No se pudo obtener respuesta de OpenAI.";
+            return "Error: No se pudo obtener respuesta de OpenAI."+testKey;
         }
 
 
