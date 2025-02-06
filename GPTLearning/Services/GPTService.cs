@@ -82,7 +82,7 @@ namespace GPTLearning.Services
                 return responseJson.choices[0].message.content.ToString();
             }
 
-            return "Error: No se pudo obtener respuesta de OpenAI."+testKey;
+            return "Error: No se pudo obtener respuesta de OpenAI."+ _apiKey;
         }
 
 
