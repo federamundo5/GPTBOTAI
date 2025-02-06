@@ -19,9 +19,7 @@ namespace GPTLearning.Services
         {
             _configuration = configuration;
             _httpClient = httpClient;
-            _apiKey = "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";
-            //_apiKey = _configuration["OpenAI:Api-Key"];
-            testKey = _configuration["testkey"];
+            _apiKey = _configuration["OpenAI:Api-Key"];
 
         }
 
