@@ -1,0 +1,72 @@
+﻿@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    body {
+        background-color: theme('colors.light') !important; /* Apply the light color as the background */
+        color: theme('colors.primary') !important; /* Apply the primary color to text */
+    }
+
+    a {
+        color: theme('colors.primary') !important; /* Links inherit the primary color */
+    }
+
+    .bg-light {
+        background-color: theme('colors.light') !important;
+    }
+
+    .text-primary {
+        color: theme('colors.primary') !important;
+    }
+
+    .text-secondary {
+        color: theme('colors.secondary') !important;
+    }
+
+    .bg-accent {
+        background-color: theme('colors.accent') !important;
+    }
+}
+
+@layer components {
+    .navbar-light {
+        background-color: theme('colors.light') !important;
+        color: theme('colors.primary') !important;
+    }
+
+    .nav-link {
+        color: theme('colors.primary') !important;
+    }
+
+    .bg-light {
+        background-color: theme('colors.light') !important;
+    }
+
+    .text-primary {
+        color: theme('colors.primary') !important;
+    }
+
+    .footer {
+        background-color: theme('colors.light') !important;
+        color: theme('colors.primary') !important;
+    }
+}
+
+@layer utilities {
+    .bg-primary {
+        background-color: theme('colors.primary') !important;
+    }
+
+    .bg-secondary {
+        background-color: theme('colors.secondary') !important;
+    }
+
+    .text-accent {
+        color: theme('colors.accent') !important;
+    }
+
+    .text-light {
+        color: theme('colors.light') !important;
+    }
+}

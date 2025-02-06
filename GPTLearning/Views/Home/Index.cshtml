@@ -1,0 +1,149 @@
+﻿<div x-data="chatbot()" x-init="init()"
+     class="flex flex-col items-center justify-start min-h-screen bg-light text-primary transition-opacity duration-1500 opacity-0" x-bind:class="{'opacity-100': showWelcome || showChat || showImage}">
+
+    <!-- Welcome Message -->
+    <div x-show="showWelcome"
+         x-transition:enter="transition-opacity duration-1500"
+         x-transition:leave="transition-opacity duration-1500 opacity-0"
+         class="text-center mt-8">
+        <h1 class="text-5xl font-bold text-primary">¡Bienvenido a 100BOTGPT!</h1>
+        <p class="text-lg text-secondary mt-4">El chat más realista del planeta.</p>
+    </div>
+
+    <!-- Image (Appears After Welcome) -->
+    <div x-show="showImage"
+         x-transition:enter="transition-opacity duration-1500"
+         x-transition:leave="transition-opacity duration-1500 opacity-0"
+         class="mt-8">
+        <img src="images/chatbot.png" alt="Chat Image" class="w-32 h-32 mx-auto" />
+    </div>
+
+    <!-- Chat Section -->
+    <div x-show="showChat"
+         x-transition:enter="transition-opacity duration-1500"
+         x-transition:leave="transition-opacity duration-1500 opacity-0"
+         class="w-full max-w-4xl mt-6 px-4">
+        <h1 class="text-3xl font-semibold text-primary">Chateá con 100BOT</h1>
+        <p class="text-[#727D73] mt-2">¡Hacé tu pregunta y recibí una respuesta única!</p>
+
+        <!-- Chat Messages -->
+        <div x-ref="chatContainer"
+             class="bg-light p-4 rounded-lg shadow-lg overflow-y-auto scrollbar-thin scrollbar-thumb-[#D0DDD0] scrollbar-track-[#E0E0E0]"
+             :style="`min-height: 160px; max-height: ${Math.min(chatMessages.length * 60, 360)}px;`">
+
+            <template x-for="message in chatMessages" :key="message.id">
+                <div class="text-left relative flex items-start space-x-2">
+                    <div :class="message.sender === 'user' ? 'bg-primary text-white' : 'bg-secondary text-black'"
+                         class="p-3 rounded-lg inline-block w-max">
+                        <p x-text="message.content"></p>
+                    </div>
+
+                    <!-- Bot image next to messages -->
+                    <template x-if="message.sender === 'bot'">
+                        <img src="images/chatbotsmall.png" alt="100BOT"
+                             class="w-8 h-8 rounded-full mt-1 ml-1" />
+                    </template>
+                </div>
+            </template>
+        </div>
+
+        <!-- Input Box -->
+        <div class="flex mt-4 items-center">
+            <textarea x-model="userMessage"
+                      class="w-full p-3 rounded-lg bg-light border-2 border-[#727D73] focus:outline-none hover:border-[#D0DDD0] transition-all duration-300"
+                      placeholder="Escribí tu mensaje...">
+        </textarea>
+            <button x-on:click="sendMessage"
+                    class="ml-2 bg-[#727D73] p-3 rounded-lg text-white flex items-center justify-center hover:translate-x-1 transition-all duration-300">
+                <img src="images/chatbotsmall.png" alt="Send" class="w-6 h-6" />
+            </button>
+        </div>
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+<script src="~/js/chatbot.js"></script>
+
+<script>
+    function chatbot() {
+        return {
+            showWelcome: false,
+            showChat: false,
+            userMessage: '',
+            chatMessages: [],
+            showImage: false,
+
+            // Initialize the chat UI
+            init() {
+                setTimeout(() => this.showWelcome = true, 500);
+                setTimeout(() => { this.showWelcome = false; this.showChat = true }, 4000);
+                setTimeout(() => this.showImage = true, 3500);
+            },
+
+            // Handle sending a message
+            async sendMessage() {
+                if (this.userMessage.trim() !== '') {
+                    console.log(this.userMessage);
+                    // Add user message
+                    this.chatMessages.push({
+                        id: Date.now(),
+                        sender: 'user',
+                        content: this.userMessage
+                    });
+
+               
+
+                    // Wait for DOM update, then scroll to bottom
+                    this.$nextTick(() => {
+                        this.$refs.chatContainer.scrollTop = this.$refs.chatContainer.scrollHeight;
+                    });
+
+                    // Send user message to API to get bot response
+                    this.getBotResponse(this.userMessage);
+
+                     // Clear input field
+                    this.userMessage = '';
+                }
+            },
+
+            // Fetch bot's response from the API
+    async getBotResponse(userMessage) {
+        try {
+            const response = await fetch('/api/chat/ask', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(userMessage)
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log("Bot response data:", data);  // Log the response to check structure
+
+                if (data.response) {
+                    // Add bot's response to the chat
+                    this.chatMessages.push({
+                        id: Date.now(),
+                        sender: 'bot',
+                        content: data.response
+                    });
+
+                    // Scroll to bottom after bot reply
+                    this.$nextTick(() => {
+                        this.$refs.chatContainer.scrollTop = this.$refs.chatContainer.scrollHeight;
+                    });
+                } else {
+                    console.error('No Response in the data');
+                }
+            } else {
+                console.error('Failed to get bot response');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+            }
+    }
+</script>

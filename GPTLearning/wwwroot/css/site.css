@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* Override Bootstrap bg-light with your custom color */
+.bg-light {
+    background-color: #D0DDD0 !important;
+}
+
+/* Custom class to push footer to the bottom */
+.full-height {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.footer {
+    margin-top: auto;
+}
+
+body {
+    font-family: 'Orbitron', sans-serif;
+}
+
+
